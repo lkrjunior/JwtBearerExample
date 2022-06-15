@@ -21,6 +21,13 @@ static void ConfigureServices(IServiceCollection services)
     services.AddEndpointsApiExplorer();
 
     services.AddSwaggerGen();
+
+    services.AddMemoryCache();
+
+    services.AddHttpClient("Server", httpClient =>
+    {
+        httpClient.BaseAddress = new Uri("https://localhost:7222");
+    });
 }
 
 static void Configure(WebApplication app, IWebHostEnvironment environment)

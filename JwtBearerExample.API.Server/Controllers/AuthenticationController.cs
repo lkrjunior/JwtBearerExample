@@ -62,11 +62,17 @@ public class AuthenticationController : ControllerBase
         return Ok(result);
     }
 
+    [ActionFilterExample]
     [HttpGet("NeedToken")]
     [Authorize]
-    public IActionResult NeedToken()
+    public IActionResult NeedToken([FromQuery] bool simulateBadRequest)
     {
-        return Ok();
+        if (simulateBadRequest)
+        {
+            return BadRequest("BadRequestObjectResult");
+        }
+
+        return Ok("OkObjectResult");
     }
 }
 
