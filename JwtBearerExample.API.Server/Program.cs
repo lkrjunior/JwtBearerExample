@@ -2,11 +2,11 @@
 
 var builder = WebApplication.CreateBuilder(args);
 
-ConfigureServices(builder);
+ConfigureServices(builder.Services);
 
 var app = builder.Build();
 
-Configure(app);
+Configure(app, app.Environment);
 
 app.Run();
 
@@ -14,18 +14,18 @@ app.Run();
 
 #region Startup
 
-static void ConfigureServices(WebApplicationBuilder builder)
+static void ConfigureServices(IServiceCollection services)
 {
-    builder.Services.AddControllers();
+    services.AddControllers();
 
-    builder.Services.AddEndpointsApiExplorer();
+    services.AddEndpointsApiExplorer();
 
-    builder.Services.AddSwaggerGen();
+    services.AddSwaggerGen();
 }
 
-static void Configure(WebApplication app)
+static void Configure(WebApplication app, IWebHostEnvironment environment)
 {
-    if (app.Environment.IsDevelopment())
+    if (environment.IsDevelopment())
     {
         app.UseSwagger();
         app.UseSwaggerUI();
